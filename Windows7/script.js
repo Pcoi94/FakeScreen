@@ -1,34 +1,48 @@
-function updateResultLink() {
-    var showMouse = document.getElementById("show-mouse-checkbox").checked;
-    var autoFullscreen = document.getElementById("auto-fullscreen-checkbox").checked;
-    var stopCode = encodeURIComponent(document.getElementById("text-input").value);
-    var completionTime = document.getElementById("number-input").value;
-    var redirectLink = encodeURIComponent(document.getElementById("url-input").value);
-
-    // Replace with your desired base URL
-    var baseLink = "https://death-screen.vercel.app/Window7";
-
-    var finalUrl = baseLink + "?ShowMouse=" + showMouse +
-                   "&AutoFullScreen=" + autoFullscreen +
-                   "&StopCode=" + stopCode +
-                   "&CompletionTime=" + completionTime +
-                   "&RedirectLink=" + redirectLink;
-
-    // Update the href attribute of the result-btn
-    var resultBtn = document.getElementById("result-btn");
-    resultBtn.href = finalUrl;
+function getUrlParams(url) {
+    const params = {};
+    const urlParts = url.split('?');
+    if (urlParts.length > 1) {
+        const paramString = urlParts[1];
+        const paramPairs = paramString.split('&');
+        paramPairs.forEach(pair => {
+            const [key, value] = pair.split('=');
+            params[key] = decodeURIComponent(value);
+        });
+    }
+    return params;
 }
 
-function copyLink() {
-    var resultBtn = document.getElementById("result-btn");
-    var tempInput = document.createElement("input");
-    tempInput.value = resultBtn.href;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-    alert("Link copied to clipboard!");
+function executeActions(params) {
+    const showMouse = params.ShowMouse === 'true';
+    const autoFullScreen = params.AutoFullScreen === 'true';
+    const stopCode = params.StopCode;
+  
+    const completionTime = parseInt(params.CompletionTime) || 0
+    const redirectLink = params.RedirectLink;
+
+    if (showMouse) {
+        document.body.style.cursor = 'none';
+    }
+
+    if (autoFullScreen) {
+        window.onload = function() {
+            document.documentElement.requestFullscreen();
+        };
+    }
+
+    // Replace stop code with redirect link
+    const stopCodeElement = document.getElementById('stop-code');
+    if (stopCodeElement && stopCode) {
+        stopCodeElement.innerHTML = stopCode;
+    }
+
+    if (completionTime > 0 && redirectLink !== '') {
+        setTimeout(function() {
+            window.location.href = redirectLink;
+        }, completionTime * 1000);
+    }
 }
 
-// Example: Call updateResultLink initially to set the link based on initial inputs
-updateResultLink();
+const currentUrl = window.location.href;
+const params = getUrlParams(currentUrl);
+executeActions(params);
