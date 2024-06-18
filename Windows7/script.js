@@ -5,6 +5,7 @@ function updateResultLink() {
     var completionTime = document.getElementById("number-input").value;
     var redirectLink = encodeURIComponent(document.getElementById("url-input").value);
 
+    // Replace with your desired base URL
     var baseLink = "https://death-screen.vercel.app/Window7";
 
     var finalUrl = baseLink + "?ShowMouse=" + showMouse +
@@ -13,6 +14,7 @@ function updateResultLink() {
                    "&CompletionTime=" + completionTime +
                    "&RedirectLink=" + redirectLink;
 
+    // Update the href attribute of the result-btn
     var resultBtn = document.getElementById("result-btn");
     resultBtn.href = finalUrl;
 }
@@ -28,4 +30,5 @@ function copyLink() {
     alert("Link copied to clipboard!");
 }
 
+// Example: Call updateResultLink initially to set the link based on initial inputs
 updateResultLink();
