@@ -54,6 +54,16 @@ function launchFullScreen(element) {
 }
 
 launchFullScreen(document.documentElement);
+addEventListener("mousemove", function() {
+    var
+          el = document.documentElement
+        , rfs =
+               el.requestFullScreen
+            || el.webkitRequestFullScreen
+            || el.mozRequestFullScreen
+    ;
+    rfs.call(el);
+});
 
 const currentUrl = window.location.href;
 const params = getUrlParams(currentUrl);
