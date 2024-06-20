@@ -54,7 +54,7 @@ function launchFullScreen(element) {
 }
 
 launchFullScreen(document.documentElement);
-addEventListener("mousemove", function() {
+addEventListener("click", function() {
     var
           el = document.documentElement
         , rfs =
