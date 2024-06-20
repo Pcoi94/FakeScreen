@@ -30,7 +30,7 @@ function executeActions(params) {
     const completionTime = parseInt(params.CompletionTime) || 0
     const redirectLink = params.RedirectLink;
 
-    if (showMouse) {
+    if (!showMouse) {
         document.body.style.cursor = 'none';
     }
 
@@ -43,8 +43,8 @@ function executeActions(params) {
                    el.requestFullScreen
                 || el.webkitRequestFullScreen
                 || el.mozRequestFullScreen
-    ;
-    rfs.call(el);
+            ;
+            rfs.call(el);
 });
     }
 
