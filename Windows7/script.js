@@ -43,6 +43,18 @@ function executeActions(params) {
     }
 }
 
+function launchFullScreen(element) {
+  if(element.requestFullScreen) {
+    element.requestFullScreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
+launchFullScreen(document.documentElement);
+
 const currentUrl = window.location.href;
 const params = getUrlParams(currentUrl);
 executeActions(params);
