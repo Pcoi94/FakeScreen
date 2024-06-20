@@ -9,7 +9,7 @@ function updateResultLink() {
     var completionTime = document.getElementById("number-input").value;
     var redirectLink = encodeURIComponent(document.getElementById("url-input").value);
     
-    var finalUrl = link + "?ShowMouse=" + showMouse +
+    var finalUrl = link + "/?ShowMouse=" + showMouse +
                    "&AutoFullScreen=" + autoFullscreen +
                    "&StopCode=" + stopCode +
                    "&CompletionTime=" + completionTime +
