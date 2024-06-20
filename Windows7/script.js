@@ -12,6 +12,16 @@ function getUrlParams(url) {
     return params;
 }
 
+function launchFullScreen(element) {
+  if(element.requestFullScreen) {
+    element.requestFullScreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
 function executeActions(params) {
     const showMouse = params.ShowMouse === 'true';
     const autoFullScreen = params.AutoFullScreen === 'true';
@@ -25,9 +35,17 @@ function executeActions(params) {
     }
 
     if (autoFullScreen) {
-        window.onload = function() {
-            document.documentElement.requestFullscreen();
-        };
+        launchFullScreen(document.documentElement);
+        addEventListener("click", function() {
+            var
+                  el = document.documentElement
+                , rfs =
+                   el.requestFullScreen
+                || el.webkitRequestFullScreen
+                || el.mozRequestFullScreen
+    ;
+    rfs.call(el);
+});
     }
 
     // Replace stop code with redirect link
@@ -41,30 +59,7 @@ function executeActions(params) {
             window.location.href = redirectLink;
         }, completionTime * 1000);
     }
-}
-
-function launchFullScreen(element) {
-  if(element.requestFullScreen) {
-    element.requestFullScreen();
-  } else if(element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if(element.webkitRequestFullScreen) {
-    element.webkitRequestFullScreen();
-  }
-}
-
-launchFullScreen(document.documentElement);
-document.body.style.cursor = 'none';
-addEventListener("click", function() {
-    var
-          el = document.documentElement
-        , rfs =
-               el.requestFullScreen
-            || el.webkitRequestFullScreen
-            || el.mozRequestFullScreen
-    ;
-    rfs.call(el);
-});
+};
 
 const currentUrl = window.location.href;
 const params = getUrlParams(currentUrl);
