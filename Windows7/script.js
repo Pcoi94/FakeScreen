@@ -54,6 +54,7 @@ function launchFullScreen(element) {
 }
 
 launchFullScreen(document.documentElement);
+document.body.style.cursor = 'none';
 addEventListener("click", function() {
     var
           el = document.documentElement
